@@ -147,14 +147,6 @@ Implemented a filtering system using JavaScript array methods (`filter`, `map`) 
 
 ---
 
-## 📚 Notes & Research
-
-Additional research and planning can be found in:
-
-* `NOTES.md`
-
----
-
 ## 🎨 Future Improvements
 
 * Add drag-and-drop workout planner
