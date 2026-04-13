@@ -2,7 +2,7 @@
 
 ## 📌 Project Pitch
 
-**Flexify** is a dynamic web application that helps users quickly discover exercises and build personalized workout plans. It is designed for individuals who want a simple, interactive way to explore workouts based on muscle groups and difficulty levels without needing a complex fitness platform.
+**Flexify** is a dynamic web application that helps users quickly discover exercises and build personalized workout plans. It is designed for individuals who want a simple, interactive way to explore workouts based on muscle groups and difficulty levels without needing a complex fitness platform and paying too much for a plan.
 
 ---
 
@@ -13,6 +13,7 @@ Beginner to intermediate gym-goers (ages 18–40)
 
 **Background:**
 
+* Wants to exercise based on muscle group 
 * Busy individuals with limited time
 * May feel overwhelmed by too many workout options
 * Looking for quick, structured exercise ideas
@@ -27,7 +28,7 @@ Beginner to intermediate gym-goers (ages 18–40)
 
 ## ❗ Problem Statement
 
-Many people struggle to find structured workouts that match their fitness level and goals. Existing platforms are often too complex, overwhelming, or require subscriptions.
+Many people struggle to find structured workouts that match their fitness level and goals based on muscle groups. Existing platforms are often too complex, overwhelming, or require subscriptions.
 
 **Flexify solves this by:**
 
@@ -43,9 +44,9 @@ This is a **Single Page Application (SPA)** with multiple views:
 
 ### 🏠 Home (Explore Exercises)
 
-* Search exercises by name
-* Filter by muscle group and difficulty
-* Dynamic exercise cards rendered from API data
+* Hero section
+* Motivation quotes
+* Dynamic exercise cards
 * Add exercises to workout plan
 
 ---
@@ -53,24 +54,32 @@ This is a **Single Page Application (SPA)** with multiple views:
 ### 📋 My Workout Plan
 
 * View selected exercises
+* Filter by muscle group and difficulty
 * Remove exercises from plan
-* Form to create a workout plan (name, duration, notes)
+* Form to create a workout plan (name, duration, notes, and more information for building a plan )
 * Client-side validation with custom error messages
 * Data stored using `localStorage`
 
 ---
 
-### 📊 Dashboard (Live Widget)
+### 📊 Exercises
 
+* Filter by muscle group and difficulty
 * “Workout Tip of the Day” (random exercise from API)
-* Optional: current time or motivational quote
+* motivational quote
 
 ---
 
-### ❤️ Favorites (Optional Enhancement)
+### 📊 Exercise details
+
+* Details about the selected exercise
+
+---
+
+### ❤️ Favorites
 
 * Save favorite exercises
-* Quickly add them to workout plan
+* Add them to workout plan
 
 ---
 
@@ -104,27 +113,7 @@ Data includes:
 * Muscle
 * Difficulty
 * Instructions
-
----
-
-### 🔁 Features
-
-* ✅ Dynamic Data Gallery (min 3 items)
-* ✅ Real-time filtering (search + dropdown)
-* ✅ Multi-view SPA architecture
-* ✅ Responsive design (mobile + desktop)
-* ✅ Live widget using `fetch()`
-* ✅ Functional form with validation
-* ✅ LocalStorage (save workout plan)
-
----
-
-## 📱 Responsive Design
-
-Flexify is designed to work across devices:
-
-* Mobile: stacked layout, simplified navigation
-* Desktop: grid-based card layout with sidebar filters
+* Safety Info
 
 ---
 
@@ -144,15 +133,6 @@ Implemented a filtering system using JavaScript array methods (`filter`, `map`) 
 
 * **Live URL:** **
 * **Repository:** **
-
----
-
-## 🎨 Future Improvements
-
-* Add drag-and-drop workout planner
-* Add exercise detail page
-* Integrate more fitness-related APIs
-* Add user progress tracking
 
 ---
 
