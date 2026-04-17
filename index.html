@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Flexify</title>
+    <link rel="icon" type="image/png" href="./media/images/logo.png">
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
@@ -14,29 +15,17 @@
   </head>
   <body>
     <header>
-      <div class="flexify">
+      <i class="fa-solid fa-bars fa-xl" id="burger-menu"></i>
+      <div class="flexify" data-link="home">
         <img src="./media/images/logo.png" alt="flexify logo" width="34" />
         <h1>Flexify</h1>
       </div>
       <nav aria-label="Main menu" id="nav-container">
+        <i class="fa-solid fa-xmark fa-xl" id="close-menu"></i>
         <ul></ul>
       </nav>
     </header>
-    <main class="landing-page">
-      <section class="hero">
-        <div>
-          <h1>Build Your Perfect Routine with Flexify</h1>
-          <p>Discover exercises tailored to your goals and muscle groups.</p>
-          <button type="button" class="btn-primary">Start Planning</button>
-        </div>
-      </section>
-      <section class="features container">
-        <div class="features-container"></div>
-        <button type="button" class="btn-primary">Start Planning</button>
-      </section>
-      <section class="motivation container"></section>
-      <section class="exercises container"></section>
-    </main>
+    <main id="app-shell"></main>
     <footer>
       <div class="flexify">
         <img src="./media/images/logo.png" alt="flexify logo" width="20" />
