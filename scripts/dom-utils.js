@@ -2,13 +2,15 @@
  * UI Component templates
  */
 
-export function createEmptyState(title, decs){
-  return`
-    <section class="banner">
+export function createEmptyState(decs, title) {
+  return `
+    ${title ? `
+      <section class="banner">
         <div>
             <h1>${title}</h1>
         </div>
-    </section>
+      </section>
+    ` : ''}
     <section class="container empty-state-container">
         <section class="empty-state-content">
             <i class="fa-solid fa-triangle-exclamation fa-5x" style="color: var(--color-primary-orange); opacity: 0.7;"></i>
@@ -19,16 +21,41 @@ export function createEmptyState(title, decs){
 `;
 }
 
-export function createLoadingState(decs){
-  return`
-    <section class="container empty-state-content">
+export function createLoadingState(title, decs) {
+  if (!title) {
+    return `
+      <section class="container loading">
+        <i class="fa-solid fa-spinner fa-spin fa-5x" style="color: var(--color-primary-orange); opacity: 0.7;"></i>
+        <p>searching...</p>
+      </section>
+    `;
+  }else if (title === "home") {
+    return `
+      <section class="hero">
+        <div>
+          <h1>Build Your Perfect Routine with Flexify</h1>
+          <p>Discover exercises tailored to your goals and muscle groups.</p>
+          <button type="button" class="btn-primary" data-link="plans">Start Planning</button>
+        </div>
+      </section>
+      <section class="container empty-state-content">
+        <i class="fa-solid fa-spinner fa-spin fa-5x" style="color: var(--color-primary-orange); opacity: 0.7;"></i>
+        <p>${decs}</p>
+      </section>
+      `;
+  }
+  return `
+    <section class="banner">
+      <div>
+          <h1>${title}</h1>
+      </div>
+    </section>
+    <section class="container loading">
       <i class="fa-solid fa-spinner fa-spin fa-5x" style="color: var(--color-primary-orange); opacity: 0.7;"></i>
       <p>${decs}</p>
     </section>
-    `
-
+    `;
 }
-
 
 export function createNavItem(item) {
   return `
@@ -72,5 +99,13 @@ export function createExerciseCard(exercise) {
           View Exercise
         </button>
       </article>
+    `;
+}
+
+export function createFilterPill(filter) {
+  return `
+    <button type="button" class="btn-filter" data-value=${filter}>
+      ${filter.charAt(0).toUpperCase() + filter.slice(1)}
+    </button>
     `;
 }

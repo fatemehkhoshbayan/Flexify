@@ -3,19 +3,15 @@ import { landingView } from "../views/landing.js";
 import { exercisesView } from "../views/exercises.js";
 import { featureItems } from "../asset/features.js";
 import { navItems } from "../asset/navItems.js";
-import {
-  createNavItem,
-  createFeatureCard,
-  createExerciseCard,
-  createEmptyState,
-} from "./dom-utils.js";
+import { createLoadingState } from "./dom-utils.js";
+import { renderNavbar, renderFeatures, renderExercises } from "./renderer.js";
+import { setupExercisesPageListener } from "./event-handlers.js";
 
 let cachedExercises = null;
 
 /* --- Configuration & Elements --- */
 
 const appShell = document.querySelector("#app-shell");
-const navContainer = document.querySelector("#nav-container ul");
 const currentYearSpan = document.querySelector("#current-year");
 const header = document.querySelector("header");
 
@@ -28,7 +24,7 @@ const header = document.querySelector("header");
 async function navigateTo(viewId, appendHistory = true) {
   // Fetch exercises only when needed and only if we don't have them yet
   if (!cachedExercises && (viewId === "home" || viewId === "exercises")) {
-    appShell.innerHTML = createLoadingState('Loading Exercises!');
+    appShell.innerHTML = createLoadingState(viewId, "Loading Exercises!");
     cachedExercises = await fetchExercises();
   }
 
@@ -51,6 +47,7 @@ async function navigateTo(viewId, appendHistory = true) {
       appShell.innerHTML = exercisesView;
       header.classList.add("shadow-header");
       renderExercises(cachedExercises);
+      setupExercisesPageListener();
       break;
 
     default:
@@ -58,37 +55,7 @@ async function navigateTo(viewId, appendHistory = true) {
   }
 }
 
-/* --- Logic / Render Functions --- */
-
-function renderNavbar(items) {
-  if (navContainer) {
-    navContainer.innerHTML = items.map(createNavItem).join("");
-  }
-}
-
-function renderFeatures(items) {
-  const container = document.querySelector(".features-container");
-  if (container) {
-    container.innerHTML = items.map(createFeatureCard).join("");
-  }
-}
-
-function renderExercises(exercises, limit = null) {
-  const container = document.querySelector(".exercises-container");
-  if (!container) return;
-
-  if (!exercises || !Array.isArray(exercises)) {
-    container.innerHTML = createEmptyState(
-      exercises,
-      "Sorry Something Went wrong, Please try again!",
-    );
-    return;
-  }
-
-  const displayList = limit ? exercises.slice(0, limit) : exercises;
-  container.innerHTML = displayList.map(createExerciseCard).join("");
-}
-
+/* --- The Backbone Listeners --- */
 function setupEventListeners() {
   const burgerBtn = document.querySelector("#burger-menu");
   const closeBtn = document.querySelector("#close-menu");
@@ -138,13 +105,9 @@ function init() {
     currentYearSpan.textContent = new Date().getFullYear();
   }
 
-  // Build the permanent UI
   renderNavbar(navItems);
-
-  // Set up click/scroll handlers
   setupEventListeners();
 
-  // Load the initial view
   const path = window.location.pathname.split("/").pop() || "home";
   const cleanPath = path === "index.html" ? "home" : path;
   const validViews = ["home", "exercises"];
