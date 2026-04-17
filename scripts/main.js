@@ -112,8 +112,7 @@ function init() {
   renderNavbar(navItems);
   setupEventListeners();
 
-  setupFavoriteListener();
-  const path = window.location.pathname.split("/").pop() ?? "home";
+  const path = window.location.pathname.split("/").pop() || "home";
   const cleanPath = path === "index.html" ? "home" : path;
   const validViews = ["home", "exercises"];
   const startView = validViews.includes(cleanPath) ? cleanPath : "home";
