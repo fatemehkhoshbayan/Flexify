@@ -1,12 +1,16 @@
+import { fetchExercises } from "../api/exercises.js";
 import { landingView } from "../views/landing.js";
+import { exercisesView } from "../views/exercises.js";
 import { featureItems } from "../asset/features.js";
 import { navItems } from "../asset/navItems.js";
-import { exercises } from "../asset/exercises.js";
 import {
   createNavItem,
   createFeatureCard,
   createExerciseCard,
+  createEmptyState,
 } from "./dom-utils.js";
+
+let cachedExercises = null;
 
 /* --- Configuration & Elements --- */
 
@@ -22,6 +26,13 @@ const header = document.querySelector("header");
  * @param {string} viewId - Matches the data-link attribute
  */
 async function navigateTo(viewId, appendHistory = true) {
+  // Fetch exercises only when needed and only if we don't have them yet
+  if (!cachedExercises && (viewId === "home" || viewId === "exercises")) {
+    // Optional: show a loading spinner in the appShell here
+    appShell.innerHTML = `<div class="loader"><i class="fa-solid fa-spinner fa-spin fa-3x"></i></div>`;
+    cachedExercises = await fetchExercises();
+  }
+
   if (appendHistory) {
     const url = viewId === "home" ? "/" : `/${viewId}`;
     window.history.pushState({ viewId }, "", url);
@@ -34,13 +45,17 @@ async function navigateTo(viewId, appendHistory = true) {
       appShell.innerHTML = landingView;
       header.classList.remove("shadow-header");
       renderFeatures(featureItems);
-      renderExercises(exercises, 4);
+      renderExercises(cachedExercises, 4);
+      break;
+
+    case "exercises":
+      appShell.innerHTML = exercisesView;
+      header.classList.add("shadow-header");
+      renderExercises(cachedExercises);
       break;
 
     default:
-      appShell.innerHTML = landingView;
-      renderFeatures(featureItems);
-      renderExercises(exercises, 4);
+      navigateTo("home");
   }
 }
 
@@ -64,7 +79,10 @@ function renderExercises(exercises, limit = null) {
   if (!container) return;
 
   if (!exercises || !Array.isArray(exercises)) {
-    container.innerHTML = exercisesEmptyView;
+    container.innerHTML = createEmptyState(
+      exercises,
+      "Sorry Something Went wrong, Please try again!",
+    );
     return;
   }
 
@@ -128,9 +146,10 @@ function init() {
   setupEventListeners();
 
   // Load the initial view
-  const path = window.location.pathname.replace("/", "") || "home";
-  const validViews = ["home",];
-  const startView = validViews.includes(path) ? path : "home";
+  const path = window.location.pathname.split("/").pop() || "home";
+  const cleanPath = path === "index.html" ? "home" : path;
+  const validViews = ["home", "exercises"];
+  const startView = validViews.includes(cleanPath) ? cleanPath : "home";
 
   navigateTo(startView);
 }
