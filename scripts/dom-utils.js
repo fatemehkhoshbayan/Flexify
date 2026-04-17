@@ -2,6 +2,36 @@
  * UI Component templates
  */
 
+export function createEmptyState(title, decs){
+  return`
+    <section class="banner">
+        <div>
+            <h1>${title}</h1>
+        </div>
+    </section>
+    <section class="container empty-state-container">
+        <section class="empty-state-content">
+            <i class="fa-solid fa-triangle-exclamation fa-5x" style="color: var(--color-primary-orange); opacity: 0.7;"></i>
+            <p>${decs}</p>
+            <button type="button" class="btn-secondary" data-link="exercises">Try Again</button>
+        </section>
+    </section>
+`;
+}
+
+export function createLoadingState(decs){
+  return`
+    <section>
+      <section class="empty-state-content">
+            <i class="fa-solid fa-spinner fa-spin fa-5x" style="color: var(--color-primary-orange); opacity: 0.7;"></i>
+            <p>${decs}</p>
+        </section>
+    </section>
+    `
+
+}
+
+
 export function createNavItem(item) {
   return `
       <li class="nav-item">
@@ -31,7 +61,7 @@ export function createExerciseCard(exercise) {
   return `
       <article class="exercise-card">
         <figure class="exercise-image">
-          <img src="./media/images/${exercise.muscle}.png" alt="Muscle that exercise will impact on it." />
+          <img src="./media/images/exercises/${exercise.muscle}.png" alt="Muscle that exercise will impact on it." />
           <figcaption class="exercise-badge">${exercise.difficulty}</figcaption>
         </figure>
         <div class="actions">

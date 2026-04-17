@@ -428,6 +428,41 @@ nav {
   color: var(--color-secondary-yellow);
 }
 
+.search-field {
+  position: relative;
+  width: 50%;
+}
+
+.search-icon {
+  position: absolute;
+  left: 2rem;
+  top: 75%;
+  transform: translateY(-50%);
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--color-deep-forest);
+  pointer-events: none;
+}
+
+.search-input {
+  padding-left: 3rem;
+  border: none;
+  box-shadow: var(--shadow-md);
+  width: 100%;
+  height: auto;
+  color: var(--color-deep-forest);
+}
+
+input {
+  border: 1px solid var(--color-deep-forest);
+  border-radius: 4px;
+  height: 2rem;
+  font-size: large;
+  padding: 1rem;
+  min-height: 2.75rem;
+  width: 100%;
+}
+
 .show-all {
   display: grid;
   gap: 2rem;

@@ -1,21 +1,28 @@
-export default async function handler(req, res) {
-  const { muscle, difficulty } = req.query;
+const API_URL = "https://flexify-backend.vercel.app/exercises";
 
-  const API_KEY = process.env.NINJA_API_KEY;
-
-  let url = "https://api.api-ninjas.com/v1/exercises?";
-  if (muscle) url += `muscle=${muscle}`;
-  if (difficulty) url += `&difficulty=${difficulty}`;
-
+/**
+ * Fetches exercises with optional filters
+ * @param {Object} filters - { muscle, type, search, limit }
+ * @returns {Promise<Array>}
+ */
+export async function fetchExercises(filters = {}) {
   try {
-    const response = await fetch(url, {
-      headers: { "X-Api-Key": API_KEY },
-    });
+    const url = new URL(API_URL);
 
-    const data = await response.json();
+    if (filters.muscle) url.searchParams.append("muscle", filters.muscle);
+    if (filters.type) url.searchParams.append("type", filters.type);
+    if (filters.search) url.searchParams.append("search", filters.search);
+    if (filters.limit) url.searchParams.append("limit", filters.limit);
 
-    return res.status(200).json(data);
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return await response.json();
   } catch (error) {
-    return res.status(500).json({ error: "Internal Server Error" });
+    console.error("Could not fetch exercises:", error);
+    return [];
   }
 }
