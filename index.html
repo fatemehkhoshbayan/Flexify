@@ -1,15 +1,46 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Flexify</title>
-    <link rel="stylesheet" href="./styles/style.css"/>
-</head>
-<body>
-    <header></header>
-    <main></main>
-    <footer></footer>
-    <script type="module" href="./scripts/main.js"></script>
-</body>
+    <link rel="icon" type="image/png" href="./media/images/logo.png">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="./styles/style.css" />
+  </head>
+  <body>
+    <header>
+      <i class="fa-solid fa-bars fa-xl" id="burger-menu"></i>
+      <div class="flexify" data-link="home">
+        <img src="./media/images/logo.png" alt="flexify logo" width="34" />
+        <h1>Flexify</h1>
+      </div>
+      <nav aria-label="Main menu" id="nav-container">
+        <i class="fa-solid fa-xmark fa-xl" id="close-menu"></i>
+        <ul></ul>
+      </nav>
+    </header>
+    <main id="app-shell"></main>
+    <footer>
+      <div class="flexify">
+        <img src="./media/images/logo.png" alt="flexify logo" width="20" />
+      </div>
+      <p>
+        © <span id="current-year"></span> <strong>Flexify</strong> Stay
+        consistent, stay strong
+      </p>
+      <a href="https://github.com/fatemehkhoshbayan/Flexify">
+        <i class="fa-brands fa-github fa-lg"></i>
+      </a>
+      <a href="https://www.linkedin.com/in/fatemeh-khoshbayan/">
+        <i class="fa-brands fa-linkedin fa-lg"></i>
+      </a>
+    </footer>
+    <script type="module" src="./scripts/main.js"></script>
+  </body>
 </html>
