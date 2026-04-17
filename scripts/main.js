@@ -1,4 +1,4 @@
-import { fetchExercises } from "../api/exercises.js";
+import { fetchExercises } from "./api.js";
 import { landingView } from "../views/landing.js";
 import { exercisesView } from "../views/exercises.js";
 import { featureItems } from "../asset/features.js";
@@ -28,8 +28,7 @@ const header = document.querySelector("header");
 async function navigateTo(viewId, appendHistory = true) {
   // Fetch exercises only when needed and only if we don't have them yet
   if (!cachedExercises && (viewId === "home" || viewId === "exercises")) {
-    // Optional: show a loading spinner in the appShell here
-    appShell.innerHTML = `<div class="loader"><i class="fa-solid fa-spinner fa-spin fa-3x"></i></div>`;
+    appShell.innerHTML = createLoadingState('Loading Exercises!');
     cachedExercises = await fetchExercises();
   }
 

@@ -21,11 +21,9 @@ export function createEmptyState(title, decs){
 
 export function createLoadingState(decs){
   return`
-    <section>
-      <section class="empty-state-content">
-            <i class="fa-solid fa-spinner fa-spin fa-5x" style="color: var(--color-primary-orange); opacity: 0.7;"></i>
-            <p>${decs}</p>
-        </section>
+    <section class="container empty-state-content">
+      <i class="fa-solid fa-spinner fa-spin fa-5x" style="color: var(--color-primary-orange); opacity: 0.7;"></i>
+      <p>${decs}</p>
     </section>
     `
 
