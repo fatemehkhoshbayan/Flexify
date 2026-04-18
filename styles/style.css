@@ -240,7 +240,8 @@ nav {
   position: relative;
 }
 
-.hero div, .banner div {
+.hero div,
+.banner div {
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -267,6 +268,17 @@ nav {
   color: var(--color-deep-forest);
   padding: 3rem;
   position: relative;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 30vh;
+  width: 100%;
+  text-align: center;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 .features {
@@ -340,12 +352,21 @@ nav {
   padding: 0 3rem;
 }
 
-.exercises-container {
+.exercises-container.grid {
   display: grid;
   gap: 3rem;
   padding: 1rem 0 1rem 0;
   align-items: stretch;
   justify-items: center;
+}
+
+.exercises-container.flex {
+  display: flex;
+  gap: 3rem;
+  padding: 1rem 0 1rem 0;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 .exercises-header {
@@ -428,6 +449,39 @@ nav {
   color: var(--color-secondary-yellow);
 }
 
+.empty-state-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 30vh;
+  text-align: center;
+  flex-direction: column;
+  gap: 2rem;
+  position: relative;
+}
+
+.container-header {
+  display: flex;
+  justify-content: flex-start;
+  position: absolute;
+  top: 0;
+}
+
+.empty-state-content {
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-md);
+  padding: 6rem;
+  gap: 4rem;
+  width: 100%;
+  height: 100%;
+  border-radius: 0.5rem;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  background-color: var(--color-light-yellow);
+}
+
 .search-field {
   position: relative;
   width: 50%;
@@ -463,17 +517,53 @@ input {
   width: 100%;
 }
 
-.show-all {
-  display: grid;
-  gap: 2rem;
-  padding: 2rem;
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 2px solid var(--color-meadow-green);
 }
 
-.show-all-exercises {
+.exercises-list {
   display: flex;
   flex-direction: column;
-  padding-top: 2rem;
   gap: 3rem;
+  margin-bottom: 2rem;
+}
+
+.btn-filter {
+  display: flex;
+  text-align: center;
+  width: fit-content;
+  background-color: var(--color-secondary-yellow);
+  border: 1px solid var(--color-primary-orange);
+  color: var(--color-deep-forest);
+  border-radius: 2rem;
+  padding: 0.5rem 2rem;
+}
+
+.btn-filter:hover {
+  background-color: var(--color-primary-orange);
+}
+
+.btn-filter-active {
+  background-color: var(--color-primary-orange);
+  border: 1px solid var(--color-secondary-yellow);
+}
+
+.filters {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: start;
+  align-items: center;
+}
+
+.filter-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-favorite.active {
+  color: var(--color-primary-orange);
 }
 
 /* Tablet */
@@ -493,7 +583,7 @@ input {
     padding: 1rem 0.5rem;
   }
 
-  .medium{
+  .medium {
     padding: 1rem 3rem;
   }
 
@@ -575,7 +665,7 @@ input {
 
   .hero div {
     position: absolute;
-    top: 35%;
+    top: 20%;
     right: 10%;
   }
 
@@ -586,7 +676,7 @@ input {
   .motivation {
     flex-direction: row;
     gap: 3rem;
-    padding: 0;
+    padding: 0 3rem ;
   }
 
   .motivation-content {
@@ -598,7 +688,7 @@ input {
   }
 
   .exercises {
-    padding: 0 0 3rem 0;
+    padding: 0 3rem 3rem 3rem;
   }
 
   .exercises-container img {
@@ -606,16 +696,24 @@ input {
   }
 
   .exercises-container {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     align-items: stretch;
     padding: 0;
-  }
-
-  .show-all {
-    grid-template-columns: repeat(3, 1fr);
   }
 }
 
 /* Monitors */
 @media (min-width: 2000px) {
+  .hero div {
+    top: 40%;
+    right: 20%;
+  }
+
+  .motivation {
+    padding: 0 6rem ;
+  }
+
+  .exercises {
+    padding: 0 6rem 3rem 6rem;
+  }
 }

@@ -1,21 +1,20 @@
-import { fetchExercises } from "../api/exercises.js";
+import { fetchExercises } from "./api.js";
 import { landingView } from "../views/landing.js";
 import { exercisesView } from "../views/exercises.js";
 import { featureItems } from "../asset/features.js";
 import { navItems } from "../asset/navItems.js";
+import { createLoadingState } from "./dom-utils.js";
+import { renderNavbar, renderFeatures, renderExercises } from "./renderer.js";
 import {
-  createNavItem,
-  createFeatureCard,
-  createExerciseCard,
-  createEmptyState,
-} from "./dom-utils.js";
+  setupExercisesPageListener,
+  setupFavoriteListener,
+} from "./event-handlers.js";
 
 let cachedExercises = null;
 
 /* --- Configuration & Elements --- */
 
 const appShell = document.querySelector("#app-shell");
-const navContainer = document.querySelector("#nav-container ul");
 const currentYearSpan = document.querySelector("#current-year");
 const header = document.querySelector("header");
 
@@ -28,8 +27,7 @@ const header = document.querySelector("header");
 async function navigateTo(viewId, appendHistory = true) {
   // Fetch exercises only when needed and only if we don't have them yet
   if (!cachedExercises && (viewId === "home" || viewId === "exercises")) {
-    // Optional: show a loading spinner in the appShell here
-    appShell.innerHTML = `<div class="loader"><i class="fa-solid fa-spinner fa-spin fa-3x"></i></div>`;
+    appShell.innerHTML = createLoadingState(viewId, "Loading Exercises!");
     cachedExercises = await fetchExercises();
   }
 
@@ -45,13 +43,14 @@ async function navigateTo(viewId, appendHistory = true) {
       appShell.innerHTML = landingView;
       header.classList.remove("shadow-header");
       renderFeatures(featureItems);
-      renderExercises(cachedExercises, 4);
+      renderExercises(cachedExercises, 3);
       break;
 
     case "exercises":
       appShell.innerHTML = exercisesView;
       header.classList.add("shadow-header");
       renderExercises(cachedExercises);
+      setupExercisesPageListener();
       break;
 
     default:
@@ -59,37 +58,7 @@ async function navigateTo(viewId, appendHistory = true) {
   }
 }
 
-/* --- Logic / Render Functions --- */
-
-function renderNavbar(items) {
-  if (navContainer) {
-    navContainer.innerHTML = items.map(createNavItem).join("");
-  }
-}
-
-function renderFeatures(items) {
-  const container = document.querySelector(".features-container");
-  if (container) {
-    container.innerHTML = items.map(createFeatureCard).join("");
-  }
-}
-
-function renderExercises(exercises, limit = null) {
-  const container = document.querySelector(".exercises-container");
-  if (!container) return;
-
-  if (!exercises || !Array.isArray(exercises)) {
-    container.innerHTML = createEmptyState(
-      exercises,
-      "Sorry Something Went wrong, Please try again!",
-    );
-    return;
-  }
-
-  const displayList = limit ? exercises.slice(0, limit) : exercises;
-  container.innerHTML = displayList.map(createExerciseCard).join("");
-}
-
+/* --- The Backbone Listeners --- */
 function setupEventListeners() {
   const burgerBtn = document.querySelector("#burger-menu");
   const closeBtn = document.querySelector("#close-menu");
@@ -116,7 +85,7 @@ function setupEventListeners() {
 
   // This listens for the browser's Back and Forward buttons
   window.addEventListener("popstate", (e) => {
-    const viewId = e.state?.viewId || "home";
+    const viewId = e.state?.viewId ?? "home";
 
     navigateTo(viewId, false);
   });
@@ -139,14 +108,11 @@ function init() {
     currentYearSpan.textContent = new Date().getFullYear();
   }
 
-  // Build the permanent UI
   renderNavbar(navItems);
-
-  // Set up click/scroll handlers
   setupEventListeners();
 
-  // Load the initial view
-  const path = window.location.pathname.split("/").pop() || "home";
+  setupFavoriteListener();
+  const path = window.location.pathname.split("/").pop() ?? "home";
   const cleanPath = path === "index.html" ? "home" : path;
   const validViews = ["home", "exercises"];
   const startView = validViews.includes(cleanPath) ? cleanPath : "home";
