@@ -45,18 +45,16 @@ This is a **Single Page Application (SPA)** with multiple views:
 ### 🏠 Home (Explore Exercises)
 
 * Hero section
+* Flexify Features
 * Motivation quotes
 * Dynamic exercise cards
-* Add exercises to workout plan
 
 ---
 
 ### 📋 My Workout Plan
 
-* View selected exercises
-* Filter by muscle group and difficulty
+* View My Plans
 * Remove exercises from plan
-* Form to create a workout plan (name, duration, notes, and more information for building a plan )
 * Client-side validation with custom error messages
 * Data stored using `localStorage`
 
@@ -65,8 +63,9 @@ This is a **Single Page Application (SPA)** with multiple views:
 ### 📊 Exercises
 
 * Filter by muscle group and difficulty
+* Search functionality
 * “Workout Tip of the Day” (random exercise from API)
-* motivational quote
+* List of exercises
 
 ---
 
@@ -80,6 +79,12 @@ This is a **Single Page Application (SPA)** with multiple views:
 
 * Save favorite exercises
 * Add them to workout plan
+
+---
+
+### 📋 Get Plan
+
+* Form to create a workout plan (name, duration, notes, and more information for building a plan )
 
 ---
 
@@ -97,13 +102,13 @@ This is a **Single Page Application (SPA)** with multiple views:
 
 ### 🔌 API Used
 
-**API Ninjas – Exercises API**
-https://www.api-ninjas.com/api/exercises
+**API flexify – Exercises API**
+https://flexify-backend.vercel.app/exercises
 
 Example endpoint:
 
 ```
-https://api.api-ninjas.com/v1/exercises?muscle=biceps
+https://flexify-backend.vercel.app/exercises?muscle=biceps
 ```
 
 Data includes:
@@ -131,8 +136,8 @@ Implemented a filtering system using JavaScript array methods (`filter`, `map`) 
 
 ## 🚀 Deployment
 
-* **Live URL:** **
-* **Repository:** **
+* **Live URL:** *https://flexify-taupe.vercel.app/*
+* **Repository:** *https://github.com/fatemehkhoshbayan/Flexify*
 
 ---
 

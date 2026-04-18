@@ -1,5 +1,4 @@
 import { fetchExercises } from "./api.js";
-import { fetchExercises } from "./api.js";
 import { landingView } from "../views/landing.js";
 import { exercisesView } from "../views/exercises.js";
 import { featureItems } from "../asset/features.js";
