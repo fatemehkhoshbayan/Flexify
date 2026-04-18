@@ -44,7 +44,6 @@ async function navigateTo(viewId, appendHistory = true) {
       header.classList.remove("shadow-header");
       renderFeatures(featureItems);
       renderExercises(cachedExercises, 3);
-      setupFavoriteListener();
       break;
 
     case "exercises":
@@ -112,6 +111,7 @@ function init() {
   renderNavbar(navItems);
   setupEventListeners();
 
+  setupFavoriteListener();
   const path = window.location.pathname.split("/").pop() ?? "home";
   const cleanPath = path === "index.html" ? "home" : path;
   const validViews = ["home", "exercises"];

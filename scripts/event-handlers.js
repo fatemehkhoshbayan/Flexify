@@ -89,6 +89,4 @@ export function setupExercisesPageListener() {
 
     updateExerciseDisplay();
   });
-
-  setupFavoriteListener();
 }
