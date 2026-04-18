@@ -5,7 +5,10 @@ import { featureItems } from "../asset/features.js";
 import { navItems } from "../asset/navItems.js";
 import { createLoadingState } from "./dom-utils.js";
 import { renderNavbar, renderFeatures, renderExercises } from "./renderer.js";
-import { setupExercisesPageListener } from "./event-handlers.js";
+import {
+  setupExercisesPageListener,
+  setupFavoriteListener,
+} from "./event-handlers.js";
 
 let cachedExercises = null;
 
@@ -40,7 +43,8 @@ async function navigateTo(viewId, appendHistory = true) {
       appShell.innerHTML = landingView;
       header.classList.remove("shadow-header");
       renderFeatures(featureItems);
-      renderExercises(cachedExercises, 4);
+      renderExercises(cachedExercises, 3);
+      setupFavoriteListener();
       break;
 
     case "exercises":
@@ -82,7 +86,7 @@ function setupEventListeners() {
 
   // This listens for the browser's Back and Forward buttons
   window.addEventListener("popstate", (e) => {
-    const viewId = e.state?.viewId || "home";
+    const viewId = e.state?.viewId ?? "home";
 
     navigateTo(viewId, false);
   });
@@ -108,7 +112,7 @@ function init() {
   renderNavbar(navItems);
   setupEventListeners();
 
-  const path = window.location.pathname.split("/").pop() || "home";
+  const path = window.location.pathname.split("/").pop() ?? "home";
   const cleanPath = path === "index.html" ? "home" : path;
   const validViews = ["home", "exercises"];
   const startView = validViews.includes(cleanPath) ? cleanPath : "home";

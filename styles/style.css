@@ -364,8 +364,9 @@ nav {
   display: flex;
   gap: 3rem;
   padding: 1rem 0 1rem 0;
-  align-items: stretch;
-  justify-items: center;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 .exercises-header {
@@ -522,12 +523,6 @@ select:focus {
   outline: 2px solid var(--color-meadow-green);
 }
 
-.show-all {
-  display: grid;
-  gap: 2rem;
-  padding: 2rem;
-}
-
 .exercises-list {
   display: flex;
   flex-direction: column;
@@ -565,6 +560,10 @@ select:focus {
 .filter-container {
   display: flex;
   justify-content: space-between;
+}
+
+.btn-favorite.active {
+  color: var(--color-primary-orange);
 }
 
 /* Tablet */
@@ -666,7 +665,7 @@ select:focus {
 
   .hero div {
     position: absolute;
-    top: 35%;
+    top: 20%;
     right: 10%;
   }
 
@@ -677,7 +676,7 @@ select:focus {
   .motivation {
     flex-direction: row;
     gap: 3rem;
-    padding: 0;
+    padding: 0 3rem ;
   }
 
   .motivation-content {
@@ -689,7 +688,7 @@ select:focus {
   }
 
   .exercises {
-    padding: 0 0 3rem 0;
+    padding: 0 3rem 3rem 3rem;
   }
 
   .exercises-container img {
@@ -697,16 +696,24 @@ select:focus {
   }
 
   .exercises-container {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     align-items: stretch;
     padding: 0;
-  }
-
-  .show-all {
-    grid-template-columns: repeat(3, 1fr);
   }
 }
 
 /* Monitors */
 @media (min-width: 2000px) {
+  .hero div {
+    top: 40%;
+    right: 20%;
+  }
+
+  .motivation {
+    padding: 0 6rem ;
+  }
+
+  .exercises {
+    padding: 0 6rem 3rem 6rem;
+  }
 }

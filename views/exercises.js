@@ -18,6 +18,6 @@ export const exercisesView = `
             <div class="filters"></div>
             <button type="button" class="btn-filter" id="btn-clear">Clear All</button>
         </section>
-        <section class="exercises-container show-all"></section>
+        <section class="exercises-container"></section>
     </section>
 `;

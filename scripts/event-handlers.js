@@ -1,6 +1,8 @@
 import { createLoadingState, createEmptyState } from "./dom-utils.js";
 import { fetchExercises } from "./api.js";
 import { renderExercises } from "./renderer.js";
+import { debounce } from "../utils/debounce.js";
+import { toggleFavorite } from "../storage/favorites.js";
 
 const activeFilters = {
   search: "",
@@ -33,19 +35,35 @@ async function updateExerciseDisplay() {
   }
 }
 
+export function setupFavoriteListener() {
+  document.addEventListener("click", (e) => {
+    const favoriteBtn = e.target.closest(".btn-favorite");
+    if (!favoriteBtn) return;
+
+    const name = favoriteBtn.dataset.name;
+
+    const updatedFav = toggleFavorite(name);
+    const isActive = updatedFav.includes(name);
+
+    favoriteBtn.classList.toggle("active", isActive);
+  });
+}
+
 export function setupExercisesPageListener() {
   const searchInput = document.querySelector("#search");
   const filterContainer = document.querySelector(".filters");
   const clearBtn = document.querySelector("#btn-clear");
 
-  // Search Functionality (3-letter rule)
-  searchInput.addEventListener("input", (e) => {
-    const value = e.target.value.trim();
-
+  const handleSearch = debounce((value) => {
     if (value.length >= 3 || value.length === 0) {
       activeFilters.search = value;
       updateExerciseDisplay();
     }
+  }, 400);
+
+  // Search Functionality (3-letter rule)
+  searchInput.addEventListener("input", (e) => {
+    handleSearch(e.target.value.trim());
   });
 
   // Filter Functionality
@@ -71,4 +89,6 @@ export function setupExercisesPageListener() {
 
     updateExerciseDisplay();
   });
+
+  setupFavoriteListener();
 }

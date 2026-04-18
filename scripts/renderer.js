@@ -5,6 +5,7 @@ import {
   createEmptyState,
   createFilterPill,
 } from "./dom-utils.js";
+import { getFavorites } from "../storage/favorites.js";
 
 /* --- Logic / Render Functions --- */
 
@@ -25,6 +26,7 @@ export function renderFeatures(items) {
 
 export function renderExercises(exercises, limit = null) {
   const container = document.querySelector(".exercises-container");
+  const favorites = getFavorites();
   const filterList = ["beginner", "intermediate", "expert"];
   const filterContainer = document.querySelector(".filters");
 
@@ -34,13 +36,27 @@ export function renderExercises(exercises, limit = null) {
     filterContainer.innerHTML = filterList.map(createFilterPill).join("");
   }
 
-  if (!exercises || !Array.isArray(exercises)) {
+  const displayList = limit ? exercises?.slice(0, limit) : exercises;
+
+  if (!displayList || displayList.length == 0) {
+    container.classList.remove("grid");
+    container.classList.add("flex");
+
     container.innerHTML = createEmptyState(
-      exercises,
       "Sorry Something Went wrong, Please try again!",
     );
     return;
+  } else {
+    container.classList.remove("flex");
+    container.classList.add("grid");
+    
+    container.innerHTML = displayList
+      .map((exercise) => {
+        const isFav = favorites.some(
+          (f) => f.toLowerCase() === exercise.name.toLowerCase(),
+        );
+        return createExerciseCard(exercise, isFav);
+      })
+      .join("");
   }
-  const displayList = limit ? exercises.slice(0, limit) : exercises;
-  container.innerHTML = displayList.map(createExerciseCard).join("");
 }

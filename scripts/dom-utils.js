@@ -11,7 +11,7 @@ export function createEmptyState(decs, title) {
         </div>
       </section>
     ` : ''}
-    <section class="container empty-state-container">
+    <section class="empty-state-container">
         <section class="empty-state-content">
             <i class="fa-solid fa-triangle-exclamation fa-5x" style="color: var(--color-primary-orange); opacity: 0.7;"></i>
             <p>${decs}</p>
@@ -60,7 +60,7 @@ export function createLoadingState(title, decs) {
 export function createNavItem(item) {
   return `
       <li class="nav-item">
-        <a href="${item.link || "#"}" aria-label="${item.tooltipTxt}" data-link="${item.id}">
+        <a href="${item.link ?? "#"}" aria-label="${item.tooltipTxt}" data-link="${item.id}">
         <div class="nav-info">
           ${item.icon}
           ${item.text}
@@ -82,7 +82,7 @@ export function createFeatureCard(feature) {
     `;
 }
 
-export function createExerciseCard(exercise) {
+export function createExerciseCard(exercise, isFav=false) {
   return `
       <article class="exercise-card">
         <figure class="exercise-image">
@@ -91,7 +91,7 @@ export function createExerciseCard(exercise) {
         </figure>
         <div class="actions">
           <i class="fa-solid fa-plus fa-large"></i>
-          <i class="fa-solid fa-heart fa-large"></i>
+          <i class="fa-solid fa-heart fa-large ${isFav ? "active" : ""} btn-favorite" data-name="${exercise.name}"></i>
         </div>
         <h3>${exercise.name}</h3>
         <p>${exercise.muscle}</p>
