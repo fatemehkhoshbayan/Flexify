@@ -100,3 +100,36 @@ export function renderFavorites(cachedExercises) {
     "No exercises has been added to Favorites!",
   );
 }
+
+export function renderDetails(details) {
+  const container = document.querySelector(".details");
+  const favorites = getFavorites();
+  const isFav = favorites.some(
+    (f) => f.toLowerCase() === details.name.toLowerCase(),
+  );
+
+  if (!container || !details) return;
+
+  container.innerHTML = `
+    <article class="details-card">
+      <figure>
+        <img src="/media/images/exercises/${details.muscle}.png" class="exercise-image"/>
+      </figure>
+      <section class="details-content">
+        <div class="title">
+          <h2>${details.name}</h2>
+          <i class="fa-solid fa-heart fa-large ${isFav ? "active" : ""} btn-favorite" data-name="${details.name}"></i>
+        </div>
+        <p><strong>Muscle:</strong> ${details.muscle}</p>
+        <p><strong>Type:</strong> ${details.type}</p>
+        <p><strong>Difficulty:</strong> ${details.difficulty}</p>
+        <p><strong>Instructions:</strong> ${details.instructions}</p>
+        <p><strong>Safety Information:</strong> ${details.safety_info}</p>
+        <p><strong>Equipments:</strong></p>
+        <ul class="equipment-list">
+          ${details.equipments.map((equ) => `<li>${equ}</li>`).join("")}
+        </ul>
+      </section>
+    </article>
+  `;
+}
