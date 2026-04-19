@@ -1,18 +1,5 @@
 export const favoritesView = `
-    <section class="banner">
-        <div>
-            <h1>Favorites</h1>
-            <div class="search-field">
-                <i class="fa-solid fa-magnifying-glass fa-xl search-icon"></i>
-                <input
-                type="search"
-                id="search"
-                placeholder="Search exercises..."
-                class="search-input"
-                />
-            </div>
-        </div>
-    </section>
+    <section class="banner"></section>
     <section class="container exercises-list">
         <section class="filter-container">
             <div class="filters"></div>

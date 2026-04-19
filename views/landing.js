@@ -3,12 +3,12 @@ export const landingView = `
         <div>
             <h1>Build Your Perfect Routine with Flexify</h1>
             <p>Discover exercises tailored to your goals and muscle groups.</p>
-            <button type="button" class="btn-primary" data-link="plans">Start Planning</button>
+            <button type="button" class="btn-primary" data-link="get-plan">Get Your Plan</button>
         </div>
     </section>
     <section class="features container">
         <div class="features-container"></div>
-        <button type="button" class="btn-primary" data-link="plans">Start Planning</button>
+        <button type="button" class="btn-primary" data-link="get-plan">Get Your Plan</button>
     </section>
     <section class="motivation container">
         <img src="./media/images/motivation.png" alt="Abstract forest path representing a continuous fitness journey, using Flexify brand colors." />

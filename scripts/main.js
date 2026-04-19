@@ -3,6 +3,7 @@ import { landingView } from "../views/landing.js";
 import { exercisesView } from "../views/exercises.js";
 import { favoritesView } from "../views/favorites.js";
 import { exerciseDetailsView } from "../views/exerciseDetails.js";
+import { getPlanView } from "../views/getPlan.js";
 import { navItems } from "../asset/navItems.js";
 import { createLoadingState } from "./dom-utils.js";
 import {
@@ -11,10 +12,12 @@ import {
   renderExercises,
   renderFavorites,
   renderDetails,
+  renderGetPlan,
 } from "./renderer.js";
 import {
   setupExercisesPageListener,
   setupFavoriteListener,
+  setupGetPlanSubmission,
 } from "./event-handlers.js";
 import { slugify } from "../utils/slugify.js";
 
@@ -66,6 +69,15 @@ const ROUTES = {
       renderDetails(selected);
     },
   },
+  "get-plan": {
+    path: "/get-plan",
+    render: () => {
+      appShell.innerHTML = getPlanView;
+      header.classList.add("shadow-header");
+      renderGetPlan();
+      setupGetPlanSubmission();
+    },
+  },
 };
 
 /* --- Core Functions --- */
@@ -74,9 +86,13 @@ const ROUTES = {
  * Ensures data is available before navigation
  */
 async function ensureData(viewId) {
-  const needsData = ["home", "exercises", "favorites", "details"].includes(
-    viewId,
-  );
+  const needsData = [
+    "home",
+    "exercises",
+    "favorites",
+    "details",
+    "get-plan",
+  ].includes(viewId);
   if (needsData && !cachedExercises) {
     appShell.innerHTML = createLoadingState(viewId, "Loading Exercises...");
     cachedExercises = await fetchExercises();

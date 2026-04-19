@@ -273,7 +273,7 @@ nav {
   width: 100%;
   text-align: center;
   color: var(--color-deep-forest);
-  padding: 2rem 0;
+  padding: 2rem;
   position: relative;
   justify-content: center;
   align-items: center;
@@ -644,13 +644,117 @@ select:focus {
   border-radius: 1rem;
   padding: 1rem;
   line-height: 1rem;
-  color: var(--color-light)
+  color: var(--color-light);
 }
 
 .title {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.get-plan {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 0 2rem 3rem 2rem;
+}
+
+.grouped {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+form {
+  width: 100%;
+}
+
+fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  border: none;
+  border-radius: 1rem;
+  padding: 2rem;
+  width: 100%;
+  background-color: var(--color-light-yellow);
+  box-shadow: var(--shadow-md);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 1rem;
+}
+
+button[type="submit"] {
+  width: fit-content;
+  padding: 1rem 3rem;
+  cursor: pointer;
+}
+
+select {
+  border: 1px solid var(--color-deep-forest);
+  border-radius: 4px;
+  font-size: medium;
+  padding: 0.5rem 1rem;
+  min-height: 2.75rem;
+  width: 100%;
+  color: var(--color-deep-forest);
+  background-color: var(--color-white);
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%231a2227' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 1rem;
+  background-position: right 1rem center;
+}
+
+select::-ms-expand {
+  display: none;
+}
+
+select:invalid {
+  color: var(--color-deep-forest);
+}
+
+option {
+  color: var(--color-deep-forest);
+}
+
+textarea {
+  border: 1px solid var(--color-deep-forest);
+  border-radius: 4px;
+  font-size: large;
+  padding: 1rem;
+  min-height: 150px;
+  width: 100%;
+}
+textarea:invalid,
+input:invalid,
+select:invalid {
+  border: 1px solid var(--color-primary-orange);
+}
+
+.toast {
+  visibility: hidden;
+  position: fixed;
+  bottom: 4rem;
+  right: 0%;
+  transform: translateX(-10%) translateY(0);
+  background: var(--color-meadow-green);
+  color: var(--color-secondary-yellow);
+  padding: 12px 24px;
+  border-radius: 1rem;
+  transition: transform 0.3s ease-in-out;
+  z-index: 20;
+  box-shadow: var(--shadow-md);
+  display: flex;
+}
+
+.toast.show {
+  visibility: visible;
 }
 
 /* Tablet */
@@ -770,6 +874,14 @@ select:focus {
 
   .details-card {
     padding: 3rem;
+  }
+
+  .grouped {
+    flex-direction: row;
+  }
+
+  .get-plan {
+    padding-bottom: 3rem;
   }
 }
 
