@@ -2,7 +2,7 @@ import { createLoadingState, createEmptyState } from "./dom-utils.js";
 import { fetchExercises } from "./api.js";
 import { renderExercises } from "./renderer.js";
 import { debounce } from "../utils/debounce.js";
-import { toggleFavorite } from "../storage/favorites.js";
+import { toggleFavorite } from "../storage/storage.favorites.js";
 
 const activeFilters = {
   search: "",
@@ -26,7 +26,7 @@ async function updateExerciseDisplay() {
     container.classList.remove("grid");
     container.classList.add("flex");
     container.innerHTML = createEmptyState(
-      "Sorry Something Went wrong, Please try again!",
+      "Sorry No Search result!",
     );
   } else {
     container.classList.remove("flex");
@@ -41,11 +41,12 @@ export function setupFavoriteListener() {
     if (!favoriteBtn) return;
 
     const name = favoriteBtn.dataset.name;
-
     const updatedFav = toggleFavorite(name);
     const isActive = updatedFav.includes(name);
 
     favoriteBtn.classList.toggle("active", isActive);
+    const event = new CustomEvent("favoritesUpdated", { detail: { name } });
+    window.dispatchEvent(event);
   });
 }
 
