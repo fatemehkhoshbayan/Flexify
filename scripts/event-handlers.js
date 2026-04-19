@@ -109,3 +109,36 @@ export function setupExercisesPageListener() {
     updateExerciseDisplay();
   });
 }
+
+export function setupGetPlanSubmission() {
+  const form = document.querySelector("#get-plan form");
+  if (!form) return;
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+    console.log("Plan Request:", data);
+
+    showToast("Success! Your fitness plan is being generated.");
+
+    form.reset();
+  });
+}
+
+function showToast(message) {
+  let toast = document.querySelector(".toast");
+  if (!toast) {
+    toast = document.createElement("div");
+    toast.className = "toast";
+    document.body.appendChild(toast);
+  }
+
+  toast.textContent = message;
+  toast.classList.add("show");
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 5000);
+}
