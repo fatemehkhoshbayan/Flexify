@@ -5,7 +5,7 @@ import {
   createEmptyState,
   createFilterPill,
 } from "./dom-utils.js";
-import { getFavorites } from "../storage/favorites.js";
+import { getFavorites } from "../storage/storage.favorites.js";
 
 /* --- Logic / Render Functions --- */
 
@@ -49,7 +49,7 @@ export function renderExercises(exercises, limit = null) {
   } else {
     container.classList.remove("flex");
     container.classList.add("grid");
-    
+
     container.innerHTML = displayList
       .map((exercise) => {
         const isFav = favorites.some(

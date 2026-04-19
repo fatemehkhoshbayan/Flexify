@@ -1,6 +1,8 @@
 import { fetchExercises } from "./api.js";
 import { landingView } from "../views/landing.js";
 import { exercisesView } from "../views/exercises.js";
+import { favoritesView } from "../views/favorites.js";
+import { getFavorites } from "../storage/storage.favorites.js";
 import { featureItems } from "../asset/features.js";
 import { navItems } from "../asset/navItems.js";
 import { createLoadingState } from "./dom-utils.js";
@@ -26,7 +28,10 @@ const header = document.querySelector("header");
  */
 async function navigateTo(viewId, appendHistory = true) {
   // Fetch exercises only when needed and only if we don't have them yet
-  if (!cachedExercises && (viewId === "home" || viewId === "exercises")) {
+  if (
+    !cachedExercises &&
+    (viewId === "home" || viewId === "exercises" || viewId === "favorites")
+  ) {
     appShell.innerHTML = createLoadingState(viewId, "Loading Exercises!");
     cachedExercises = await fetchExercises();
   }
@@ -43,13 +48,28 @@ async function navigateTo(viewId, appendHistory = true) {
       appShell.innerHTML = landingView;
       header.classList.remove("shadow-header");
       renderFeatures(featureItems);
-      renderExercises(cachedExercises, 3);
+      renderExercises(
+        cachedExercises,
+        3,
+        "Sorry Something Went wrong, Please try again!",
+      );
       break;
 
     case "exercises":
       appShell.innerHTML = exercisesView;
       header.classList.add("shadow-header");
       renderExercises(cachedExercises);
+      setupExercisesPageListener();
+      break;
+
+    case "favorites":
+      appShell.innerHTML = favoritesView;
+      header.classList.add("shadow-header");
+      const favoriteNames = getFavorites();
+      const favoriteObjects = cachedExercises.filter((exercise) =>
+        favoriteNames.includes(exercise.name),
+      );
+      renderExercises(favoriteObjects, "No Favorites has been added!");
       setupExercisesPageListener();
       break;
 
@@ -66,10 +86,12 @@ function setupEventListeners() {
 
   burgerBtn?.addEventListener("click", () => {
     navMenu.classList.add("active");
+    document.body.style.overflow = "hidden";
   });
 
   closeBtn?.addEventListener("click", () => {
     navMenu.classList.remove("active");
+    document.body.style.overflow = "";
   });
 
   document.addEventListener("click", (e) => {
@@ -78,8 +100,18 @@ function setupEventListeners() {
       e.preventDefault();
 
       navMenu.classList.remove("active");
+      document.body.style.overflow = "";
       const viewId = link.getAttribute("data-link");
       navigateTo(viewId);
+    }
+  });
+
+  // Listen for the favorite toggle event
+  window.addEventListener("favoritesUpdated", () => {
+    const currentView = window.history.state?.viewId;
+
+    if (currentView === "favorites") {
+      navigateTo("favorites", false);
     }
   });
 
@@ -110,11 +142,11 @@ function init() {
 
   renderNavbar(navItems);
   setupEventListeners();
-
   setupFavoriteListener();
+
   const path = window.location.pathname.split("/").pop() ?? "home";
   const cleanPath = path === "index.html" ? "home" : path;
-  const validViews = ["home", "exercises"];
+  const validViews = ["home", "exercises", "favorites"];
   const startView = validViews.includes(cleanPath) ? cleanPath : "home";
 
   navigateTo(startView);

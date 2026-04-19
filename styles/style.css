@@ -74,9 +74,10 @@ ul {
   display: block;
   position: absolute;
   top: 50px;
-  right: 50px;
+  right: 30px;
   font-size: 2rem;
   cursor: pointer;
+  z-index: 20;
 }
 
 #nav-container {
@@ -84,21 +85,26 @@ ul {
   top: 0;
   right: -100%;
   width: 100%;
-  height: fit-content;
+  height: 100vh;
   padding: 2rem;
   background-color: var(--color-light);
   box-shadow: var(--shadow-md);
   transition: left 0.4s ease;
   z-index: 100;
+  display: flex;
+  flex-direction: column;
 }
 
 #nav-container.active {
   left: 0;
+  color: var(--color-deep-forest);
 }
 
 #nav-container ul {
   flex-direction: column;
+  justify-content: flex-start;
   align-items: flex-start;
+  width: 100%;
   gap: 2rem;
 }
 
@@ -233,7 +239,7 @@ nav {
   background-size: cover;
   background-position: center;
   display: block;
-  min-height: 75vh;
+  min-height: 80vh;
   width: 100%;
   text-align: center;
   color: var(--color-deep-forest);
@@ -482,7 +488,7 @@ nav {
   display: flex;
   flex-direction: column;
   box-shadow: var(--shadow-md);
-  padding: 6rem;
+  padding: 3rem;
   gap: 4rem;
   width: 100%;
   height: 100%;
@@ -516,6 +522,7 @@ nav {
   min-width: 250px;
   height: auto;
   color: var(--color-deep-forest);
+  background-color: var(--color-light);
 }
 
 input {
@@ -532,6 +539,7 @@ input:focus,
 textarea:focus,
 select:focus {
   outline: 2px solid var(--color-meadow-green);
+  background-color: var(--color-light) !important;
 }
 
 .exercises-list {
@@ -575,7 +583,7 @@ select:focus {
   font-size: smaller;
 }
 
-.btn-favorite{
+.btn-favorite {
   opacity: 50%;
 }
 
@@ -678,6 +686,10 @@ select:focus {
 
   .btn-filter {
     padding: 0.5rem 2rem;
+  }
+
+  .empty-state-content {
+    padding: 6rem;
   }
 }
 
