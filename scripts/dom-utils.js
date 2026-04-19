@@ -2,7 +2,7 @@
  * UI Component templates
  */
 
-export function createEmptyState(decs, title, dataLink) {
+export function createEmptyState(decs, title) {
   return `
     ${title ? `
       <section class="banner">
@@ -82,6 +82,8 @@ export function createFeatureCard(feature) {
 }
 
 export function createExerciseCard(exercise, isFav=false) {
+  // to-do: add functionality
+  // <i class="fa-solid fa-plus fa-large"></i>
   return `
       <article class="exercise-card">
         <figure class="exercise-image">
@@ -89,12 +91,15 @@ export function createExerciseCard(exercise, isFav=false) {
           <figcaption class="exercise-badge">${exercise.difficulty}</figcaption>
         </figure>
         <div class="actions">
-          <i class="fa-solid fa-plus fa-large"></i>
           <i class="fa-solid fa-heart fa-large ${isFav ? "active" : ""} btn-favorite" data-name="${exercise.name}"></i>
         </div>
         <h3>${exercise.name}</h3>
         <p>${exercise.muscle}</p>
-        <button aria-label="View ${exercise.name} details" class="btn-secondary" data-link="details">
+        <button 
+          aria-label="View ${exercise.name} details" 
+          class="btn-secondary" 
+          data-link="details"
+          data-name="${exercise.name}">
           View Exercise
         </button>
       </article>

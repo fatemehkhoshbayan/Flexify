@@ -1,8 +1,9 @@
 import { createLoadingState, createEmptyState } from "./dom-utils.js";
 import { fetchExercises } from "./api.js";
-import { renderExercises } from "./renderer.js";
+import { renderExerciseList } from "./renderer.js";
 import { debounce } from "../utils/debounce.js";
 import { toggleFavorite } from "../storage/storage.favorites.js";
+import { getFavorites } from "../storage/storage.favorites.js";
 
 const activeFilters = {
   search: "",
@@ -15,23 +16,40 @@ async function updateExerciseDisplay() {
   const container = document.querySelector(".exercises-container");
   if (!container) return;
 
+  // Identify where we are
+  const currentView = window.history.state?.viewId || "exercises";
+
   container.innerHTML = createLoadingState();
 
-  const exercises = await fetchExercises({
+  // 1. Fetch data based on search/difficulty filters
+  let exercises = await fetchExercises({
     search: activeFilters.search,
     difficulty: activeFilters.difficulty,
   });
 
+  // 2. If we are on the favorites page, narrow results to ONLY favorites
+  if (currentView === "favorites") {
+    const favoriteNames = getFavorites();
+    exercises = exercises.filter((ex) => favoriteNames.includes(ex.name));
+  }
+
+  // 3. Render logic
   if (!exercises || exercises.length === 0) {
     container.classList.remove("grid");
     container.classList.add("flex");
-    container.innerHTML = createEmptyState(
-      "Sorry No Search result!",
-    );
+
+    const message =
+      currentView === "favorites"
+        ? "No favorites match your search!"
+        : "Sorry, no search results!";
+
+    container.innerHTML = createEmptyState(message);
   } else {
     container.classList.remove("flex");
     container.classList.add("grid");
-    renderExercises(exercises);
+
+    // Use the generic list renderer to avoid re-triggering filter creation
+    renderExerciseList(exercises, 0, "No results found");
   }
 }
 
