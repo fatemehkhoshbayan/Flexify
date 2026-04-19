@@ -6,6 +6,7 @@ import {
   createFilterPill,
 } from "./dom-utils.js";
 import { getFavorites } from "../storage/storage.favorites.js";
+import { featureItems } from "../asset/features.js";
 
 /* --- Logic / Render Functions --- */
 
@@ -24,21 +25,11 @@ export function renderFeatures(items) {
   }
 }
 
-export function renderExercises(
-  exercises,
-  limit = null,
-  emptyTxt = "Sorry Something Went wrong, Please try again!",
-) {
+export function renderExerciseList(exercises, limit = 0, emptyTxt) {
   const container = document.querySelector(".exercises-container");
   const favorites = getFavorites();
-  const filterList = ["beginner", "intermediate", "expert"];
-  const filterContainer = document.querySelector(".filters");
 
   if (!container) return;
-
-  if (filterContainer && filterContainer.innerHTML.trim() === "") {
-    filterContainer.innerHTML = filterList.map(createFilterPill).join("");
-  }
 
   const displayList = limit ? exercises?.slice(0, limit) : exercises;
 
@@ -61,4 +52,51 @@ export function renderExercises(
       })
       .join("");
   }
+}
+
+export function renderLanding(exercises) {
+  renderFeatures(featureItems);
+  renderExerciseList(
+    exercises,
+    3,
+    "Sorry Something Went wrong, Please try again!",
+  );
+}
+
+export function renderExercises(exercises) {
+  const container = document.querySelector(".exercises-container");
+  const filterList = ["beginner", "intermediate", "expert"];
+  const filterContainer = document.querySelector(".filters");
+
+  if (!container) return;
+
+  if (filterContainer && filterContainer.innerHTML.trim() === "") {
+    filterContainer.innerHTML = filterList.map(createFilterPill).join("");
+  }
+
+  renderExerciseList(
+    exercises,
+    0,
+    "Sorry Something Went wrong, Please try again!",
+  );
+}
+
+export function renderFavorites(cachedExercises) {
+  const filterList = ["beginner", "intermediate", "expert"];
+  const filterContainer = document.querySelector(".filters");
+
+  const favoriteNames = getFavorites();
+  const favoriteObjects = cachedExercises.filter((exercise) =>
+    favoriteNames.includes(exercise.name),
+  );
+
+  if (filterContainer && filterContainer.innerHTML.trim() === "") {
+    filterContainer.innerHTML = filterList.map(createFilterPill).join("");
+  }
+
+  renderExerciseList(
+    favoriteObjects,
+    0,
+    "No exercises has been added to Favorites!",
+  );
 }

@@ -2,7 +2,7 @@
  * UI Component templates
  */
 
-export function createEmptyState(decs, title) {
+export function createEmptyState(decs, title, dataLink) {
   return `
     ${title ? `
       <section class="banner">
@@ -15,7 +15,6 @@ export function createEmptyState(decs, title) {
         <section class="empty-state-content">
             <i class="fa-solid fa-triangle-exclamation fa-5x" style="color: var(--color-primary-orange); opacity: 0.7;"></i>
             <p>${decs}</p>
-            <button type="button" class="btn-secondary" data-link="exercises">Try Again</button>
         </section>
     </section>
 `;
