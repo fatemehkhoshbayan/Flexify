@@ -51,7 +51,9 @@ This is a **Single Page Application (SPA)** with multiple views:
 
 ---
 
-### 📋 My Workout Plan
+### 📋 My Workout Plan 
+
+Will added in the next version
 
 * View My Plans
 * Remove exercises from plan
@@ -97,6 +99,7 @@ This is a **Single Page Application (SPA)** with multiple views:
 * JavaScript (ES6+)
 * Fetch API
 * LocalStorage
+* Vercel for deployment
 
 ---
 
