@@ -13,13 +13,14 @@ export const navItems = [
     icon: `<i class="fa-solid fa-wand-magic-sparkles fa-xl"></i>`,
     href:""
   },
-  {
-    id: "plans",
-    tooltipTxt: "Go to my plans page",
-    text:"My Plans",
-    icon: `<i class="fa-solid fa-calendar-days fa-xl"></i>`,
-    href:""
-  },
+  // to-do: add my plans view
+  // {
+  //   id: "plans",
+  //   tooltipTxt: "Go to my plans page",
+  //   text:"My Plans",
+  //   icon: `<i class="fa-solid fa-calendar-days fa-xl"></i>`,
+  //   href:""
+  // },
   {
     id: "favorites",
     tooltipTxt: "Go to favorite exercises page",
