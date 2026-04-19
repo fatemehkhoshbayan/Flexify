@@ -181,7 +181,6 @@ function init() {
   setupEventListeners();
   setupFavoriteListener();
 
-  // Robust path parsing for deep-linking
   const pathParts = window.location.pathname.split("/").filter(Boolean);
   let startView = "home";
   let startData = null;

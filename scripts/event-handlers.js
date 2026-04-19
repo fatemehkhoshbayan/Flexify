@@ -73,6 +73,8 @@ export function setupExercisesPageListener() {
   const filterContainer = document.querySelector(".filters");
   const clearBtn = document.querySelector("#btn-clear");
 
+  if (!filterContainer || !clearBtn) return;
+
   const handleSearch = debounce((value) => {
     if (value.length >= 3 || value.length === 0) {
       activeFilters.search = value;
@@ -81,9 +83,11 @@ export function setupExercisesPageListener() {
   }, 400);
 
   // Search Functionality (3-letter rule)
-  searchInput.addEventListener("input", (e) => {
-    handleSearch(e.target.value.trim());
-  });
+  if (searchInput) {
+    searchInput.addEventListener("input", (e) => {
+      handleSearch(e.target.value.trim());
+    });
+  }
 
   // Filter Functionality
   filterContainer.addEventListener("click", async (e) => {
@@ -111,19 +115,160 @@ export function setupExercisesPageListener() {
 }
 
 export function setupGetPlanSubmission() {
-  const form = document.querySelector("#get-plan form");
+  const container = document.querySelector("#get-plan");
+  if (!container) return;
+
+  const form = container.querySelector("form");
   if (!form) return;
 
+  const nameInput = form.querySelector("#name");
+  const nameError = form.querySelector(".name-error");
+  const emailInput = form.querySelector("#email");
+  const emailError = form.querySelector(".email-error");
+  const weightInput = form.querySelector("#weight");
+  const heightInput = form.querySelector("#height");
+  const noteInput = form.querySelector("#note");
+
+  if (
+    !nameInput ||
+    !nameError ||
+    !emailInput ||
+    !emailError ||
+    !weightInput ||
+    !heightInput ||
+    !noteInput
+  ) {
+    return;
+  }
+
+  const validateName = () => {
+    const value = nameInput.value.trim();
+    const nameRegex = /^[a-zA-Z\s]+$/;
+
+    if (value === "") {
+      nameInput.setCustomValidity("Name is required!");
+    } else if (!nameRegex.test(value)) {
+      nameInput.setCustomValidity(
+        "Names cannot contain numbers or special characters.",
+      );
+    } else {
+      nameInput.setCustomValidity("");
+    }
+  };
+
+  const validateEmail = () => {
+    const value = emailInput.value.trim();
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (value === "") {
+      emailInput.setCustomValidity("");
+    } else if (!emailPattern.test(value)) {
+      emailInput.setCustomValidity("Please enter a valid email address.");
+    } else {
+      emailInput.setCustomValidity("");
+    }
+  };
+
+  const validateWeight = () => {
+    const value = weightInput.value.trim();
+    if (value === "") {
+      weightInput.setCustomValidity("");
+    } else if (!/^\d+(\.\d+)?$/.test(value)) {
+      weightInput.setCustomValidity("Weight must be a valid number.");
+    } else if (Number(value) <= 0) {
+      weightInput.setCustomValidity("Weight must be greater than zero.");
+    } else {
+      weightInput.setCustomValidity("");
+    }
+  };
+
+  const validateHeight = () => {
+    const value = heightInput.value.trim();
+    if (value === "") {
+      heightInput.setCustomValidity("");
+    } else if (!/^\d+(\.\d+)?$/.test(value)) {
+      heightInput.setCustomValidity("Height must be a valid number.");
+    } else if (Number(value) <= 0) {
+      heightInput.setCustomValidity("Height must be greater than zero.");
+    } else {
+      heightInput.setCustomValidity("");
+    }
+  };
+
+  const validateNote = () => {
+    if (noteInput.value.length <= 100) {
+      noteInput.setCustomValidity("Note must be at least 100 characters.");
+    } else {
+      noteInput.setCustomValidity("");
+    }
+  };
+
+  const showOrClearFieldError = (field) => {
+    const errorEl = field
+      .closest(".form-group")
+      ?.querySelector(".error-message");
+    if (!errorEl) return;
+
+    if (field.validity.valid) {
+      errorEl.textContent = "";
+      errorEl.style.display = "none";
+    } else {
+      errorEl.textContent = field.validationMessage;
+      errorEl.style.display = "flex";
+    }
+  };
+
+  form.addEventListener(
+    "invalid",
+    (e) => {
+      e.preventDefault();
+      showOrClearFieldError(e.target);
+    },
+    true,
+  );
+
+  form.addEventListener("input", (e) => {
+    if (e.target === nameInput) validateName();
+    if (e.target === emailInput) validateEmail();
+    if (e.target === weightInput) validateWeight();
+    if (e.target === heightInput) validateHeight();
+    if (e.target === noteInput) validateNote();
+
+    if (
+      e.target instanceof HTMLInputElement ||
+      e.target instanceof HTMLSelectElement ||
+      e.target instanceof HTMLTextAreaElement
+    ) {
+      showOrClearFieldError(e.target);
+    }
+  });
+
   form.addEventListener("submit", (e) => {
+    validateName();
+    validateEmail();
+    validateWeight();
+    validateHeight();
+    validateNote();
+
+    if (!form.checkValidity()) {
+      e.preventDefault();
+      form.querySelectorAll("input, select, textarea").forEach((el) => {
+        showOrClearFieldError(el);
+      });
+      return;
+    }
+
     e.preventDefault();
-
     const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
-    console.log("Plan Request:", data);
+    console.log("Plan Request:", Object.fromEntries(formData.entries()));
 
-    showToast("Success! Your fitness plan is being generated.");
+    showToast("Success! Your fitness plan is being prepared.");
 
     form.reset();
+    form.querySelectorAll(".error-message").forEach((msg) => {
+      msg.style.display = "none";
+      msg.textContent = "";
+    });
   });
 }
 

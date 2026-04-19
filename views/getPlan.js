@@ -1,9 +1,9 @@
 export const getPlanView = `
-    <section class="banner"></section> 
-    <section class="container get-plan" id="get-plan">
+    <section class="banner"></section>
+    <section class="container get-plan" id="get-plan" aria-label="Fitness plan request form">
         <form>
             <fieldset>
-                <section class="grouped">
+                <div class="grouped">
                     <div class="form-group">
                         <label for="name">Full Name:</label>
                         <input
@@ -13,6 +13,7 @@ export const getPlanView = `
                             required
                             placeholder="John Smith"
                         />
+                        <p class="error-message name-error" id="err-name" role="alert"></p>
                     </div>
                     <div class="form-group">
                         <label for="email">Email:</label>
@@ -23,31 +24,34 @@ export const getPlanView = `
                             required
                             placeholder="email@example.com"
                         />
+                        <p class="error-message email-error" id="err-email" role="alert"></p>
                     </div>
-                </section>
-                <section class="grouped">
+                </div>
+                <div class="grouped">
                     <div class="form-group">
-                    <label for="weight">Weight:</label>
-                    <input
-                        type="text"
-                        id="weight"
-                        name="weight"
-                        required
-                        placeholder="45 kg"
-                    />
+                        <label for="weight">Weight:</label>
+                        <input
+                            type="text"
+                            id="weight"
+                            name="weight"
+                            required
+                            placeholder="70"
+                        />
+                        <p class="error-message weight-error" id="err-weight" role="alert"></p>
                     </div>
                     <div class="form-group">
-                    <label for="height">height:</label>
-                    <input
-                        type="height"
-                        id="height"
-                        name="height"
-                        required
-                        placeholder="170 cm"
-                    />
+                        <label for="height">Height:</label>
+                        <input
+                            type="text"
+                            id="height"
+                            name="height"
+                            required
+                            placeholder="170"
+                        />
+                        <p class="error-message height-error" id="err-height" role="alert"></p>
                     </div>
-                </section>
-                <section class="grouped">
+                </div>
+                <div class="grouped">
                     <div class="form-group">
                     <label for="age">Age:</label>
                     <select id="age" name="age" required>
@@ -73,14 +77,16 @@ export const getPlanView = `
                         <option value="everyday">Everyday</option>
                     </select>
                     </div>
-                </section>
+                </div>
                 <div class="form-group">
-                <label for="note">Your Note:</label>
-                <textarea
-                    id="note"
-                    name="note"
-                    placeholder="Let me know what you think!"
-                ></textarea>
+                    <label for="note">Your Note:</label>
+                    <textarea
+                        id="note"
+                        name="note"
+                        required
+                        placeholder="Let me know what you think!"
+                    ></textarea>
+                    <p class="error-message note-error" id="err-note" role="alert"></p>
                 </div>
                 <button type="submit" class="btn-primary medium">Submit</button>
             </fieldset>
