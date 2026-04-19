@@ -5,7 +5,7 @@ import {
   createEmptyState,
   createFilterPill,
 } from "./dom-utils.js";
-import { getFavorites } from "../storage/favorites.js";
+import { getFavorites } from "../storage/storage.favorites.js";
 
 /* --- Logic / Render Functions --- */
 
@@ -24,7 +24,11 @@ export function renderFeatures(items) {
   }
 }
 
-export function renderExercises(exercises, limit = null) {
+export function renderExercises(
+  exercises,
+  limit = null,
+  emptyTxt = "Sorry Something Went wrong, Please try again!",
+) {
   const container = document.querySelector(".exercises-container");
   const favorites = getFavorites();
   const filterList = ["beginner", "intermediate", "expert"];
@@ -42,14 +46,12 @@ export function renderExercises(exercises, limit = null) {
     container.classList.remove("grid");
     container.classList.add("flex");
 
-    container.innerHTML = createEmptyState(
-      "Sorry Something Went wrong, Please try again!",
-    );
+    container.innerHTML = createEmptyState(emptyTxt);
     return;
   } else {
     container.classList.remove("flex");
     container.classList.add("grid");
-    
+
     container.innerHTML = displayList
       .map((exercise) => {
         const isFav = favorites.some(
