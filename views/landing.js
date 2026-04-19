@@ -19,7 +19,7 @@ export const landingView = `
     </section>
     <section class="exercises container">
         <header class="exercises-header">
-            <h2>Exercises</h2>
+            <h2 id="landing-exercises-heading">Exercises</h2>
             <button type="button" class="btn-primary medium" data-link="exercises">Show More</button>
         </header>
         <section class="exercises-container"></section>

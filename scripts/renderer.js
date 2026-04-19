@@ -156,21 +156,30 @@ export function renderDetails(details) {
       <figure>
         <img src="/media/images/exercises/${details.muscle}.png" class="exercise-image"/>
       </figure>
-      <section class="details-content">
+      <div class="details-content">
         <div class="title">
           <h2>${details.name}</h2>
           <i class="fa-solid fa-heart fa-large ${isFav ? "active" : ""} btn-favorite" data-name="${details.name}"></i>
         </div>
-        <p><strong>Muscle:</strong> ${details.muscle}</p>
-        <p><strong>Type:</strong> ${details.type}</p>
-        <p><strong>Difficulty:</strong> ${details.difficulty}</p>
-        <p><strong>Instructions:</strong> ${details.instructions}</p>
-        <p><strong>Safety Information:</strong> ${details.safety_info}</p>
-        <p><strong>Equipments:</strong></p>
-        <ul class="equipment-list">
-          ${details.equipments.map((equ) => `<li>${equ}</li>`).join("")}
-        </ul>
-      </section>
+        <dl class="details-meta">
+          <dt>Muscle</dt>
+          <dd>${details.muscle}</dd>
+          <dt>Type</dt>
+          <dd>${details.type}</dd>
+          <dt>Difficulty</dt>
+          <dd>${details.difficulty}</dd>
+          <dt>Instructions</dt>
+          <dd>${details.instructions}</dd>
+          <dt>Safety information</dt>
+          <dd>${details.safety_info}</dd>
+          <dt>Equipment</dt>
+          <dd>
+            <ul class="equipment-list">
+              ${details.equipments.map((equ) => `<li>${equ}</li>`).join("")}
+            </ul>
+          </dd>
+        </dl>
+      </div>
     </article>
   `;
 }

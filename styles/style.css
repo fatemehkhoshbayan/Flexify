@@ -635,6 +635,25 @@ select:focus {
   gap: 1rem;
 }
 
+.details-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.details-meta dt {
+  font-weight: 700;
+}
+
+.details-meta dd {
+  margin: 0;
+}
+
+.details-meta dd ul {
+  margin-top: 0.25rem;
+}
+
 .details figure {
   min-width: 100px;
 }
@@ -755,6 +774,14 @@ select:invalid {
 
 .toast.show {
   visibility: visible;
+}
+
+.error-message {
+  display: none;
+  color: var(--color-primary-orange);
+  font-size: 0.8rem;
+  margin-top: 5px;
+  min-height: 1.2em;
 }
 
 /* Tablet */

@@ -4,13 +4,17 @@
 
 export function createEmptyState(decs, title) {
   return `
-    ${title ? `
+    ${
+      title
+        ? `
       <section class="banner">
         <div>
             <h1>${title}</h1>
         </div>
       </section>
-    ` : ''}
+    `
+        : ""
+    }
     <section class="empty-state-container">
         <section class="empty-state-content">
             <i class="fa-solid fa-triangle-exclamation fa-5x" style="color: var(--color-primary-orange); opacity: 0.7;"></i>
@@ -28,7 +32,7 @@ export function createLoadingState(title, decs) {
         <p>searching...</p>
       </section>
     `;
-  }else if (title === "home") {
+  } else if (title === "home") {
     return `
       <section class="hero">
         <div>
@@ -59,7 +63,7 @@ export function createLoadingState(title, decs) {
 export function createNavItem(item) {
   return `
       <li class="nav-item">
-        <a href="${item.link ?? "#"}" aria-label="${item.tooltipTxt}" data-link="${item.id}">
+        <a href="#" aria-label="${item.text}" data-link="${item.id}">
         <div class="nav-info">
           ${item.icon}
           ${item.text}
@@ -81,7 +85,7 @@ export function createFeatureCard(feature) {
     `;
 }
 
-export function createExerciseCard(exercise, isFav=false) {
+export function createExerciseCard(exercise, isFav = false) {
   // to-do: add functionality
   // <i class="fa-solid fa-plus fa-large"></i>
   return `
