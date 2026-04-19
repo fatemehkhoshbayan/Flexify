@@ -7,6 +7,7 @@ import {
 } from "./dom-utils.js";
 import { getFavorites } from "../storage/storage.favorites.js";
 import { featureItems } from "../asset/features.js";
+import { motivationalQuote } from "../asset/motivational-quote.js";
 
 /* --- Logic / Render Functions --- */
 
@@ -23,6 +24,33 @@ export function renderFeatures(items) {
   if (container) {
     container.innerHTML = items.map(createFeatureCard).join("");
   }
+}
+
+export function renderBanner(title, needSearch = true) {
+  const quote =
+    motivationalQuote[Math.floor(Math.random() * motivationalQuote.length)];
+
+  return `
+    <div>
+      <h1>${title}</h1>
+      <p>${quote}</p>
+      ${
+        needSearch
+          ? `
+        <div class="search-field">
+          <i class="fa-solid fa-magnifying-glass fa-xl search-icon"></i>
+          <input
+          type="search"
+          id="search"
+          placeholder="Search exercises..."
+          class="search-input"
+          />
+        </div>
+      `
+          : ""
+      }
+    </div>
+    `;
 }
 
 export function renderExerciseList(exercises, limit = 0, emptyTxt) {
@@ -65,6 +93,10 @@ export function renderLanding(exercises) {
 
 export function renderExercises(exercises) {
   const container = document.querySelector(".exercises-container");
+  const bannerContainer = document.querySelector(".banner");
+  if (bannerContainer) {
+    bannerContainer.innerHTML = renderBanner("Exercises");
+  }
   const filterList = ["beginner", "intermediate", "expert"];
   const filterContainer = document.querySelector(".filters");
 
@@ -82,6 +114,11 @@ export function renderExercises(exercises) {
 }
 
 export function renderFavorites(cachedExercises) {
+  const bannerContainer = document.querySelector(".banner");
+  if (bannerContainer) {
+    bannerContainer.innerHTML = renderBanner("Favorites");
+  }
+
   const filterList = ["beginner", "intermediate", "expert"];
   const filterContainer = document.querySelector(".filters");
 
@@ -103,6 +140,10 @@ export function renderFavorites(cachedExercises) {
 
 export function renderDetails(details) {
   const container = document.querySelector(".details");
+  const bannerContainer = document.querySelector(".banner");
+  if (bannerContainer) {
+    bannerContainer.innerHTML = renderBanner("Exercise Details", false);
+  }
   const favorites = getFavorites();
   const isFav = favorites.some(
     (f) => f.toLowerCase() === details.name.toLowerCase(),
@@ -132,4 +173,11 @@ export function renderDetails(details) {
       </section>
     </article>
   `;
+}
+
+export function renderGetPlan() {
+  const bannerContainer = document.querySelector(".banner");
+  if (bannerContainer) {
+    bannerContainer.innerHTML = renderBanner("Get Your Plan", false);
+  }
 }
